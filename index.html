@@ -3,31 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Pokedex</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<table>
+<table class="tablo">
     <tr>
         <td>
             <form autocomplete="off" id="inputForm" onsubmit="event.preventDefault(); formSubmit()">
                 <div>
                     <label>Name or ID
+                        <br>
                         <input type="text" name="pokeNameOrId" alt="Insert Name or ID of Pokemon" id="pokeNameOrId">
                     </label>
                 </div>
 
                     <label>
+                        <br>
                         <input type="submit" value="Submit">
                     </label>
-                </div>
 
             </form>
         </td>
-        <td>
+
+        <td class="me">
             <table id="outputTable">
                 <thead>
                 <tr>
-                    <th>Name</th>
                     <th>ID</th>
+                    <th>Name</th>
                     <th>Moves</th>
                     <th>Type</th>
                     <th>Front</th>
@@ -40,9 +43,9 @@
                 </tbody>
             </table>
         </td>
+
     </tr>
 </table>
-
 <script src="script.js"></script>
 </body>
 </html>

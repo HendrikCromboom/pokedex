@@ -1,0 +1,15 @@
+@font-face {
+    font-family: "PokemonClassic";
+    src: url(Pokemon.ttf);
+}
+body{
+    background:url(s.png) no-repeat center center fixed;
+    background-size: cover;
+    overflow: hidden;
+    font-family: PokemonClassic, Arial Black;
+
+}
+.tablo{
+    margin-top: 39%;
+    margin-left: 10%;
+}

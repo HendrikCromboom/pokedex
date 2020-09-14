@@ -30,11 +30,11 @@ function pushFormToTable() {
     table.removeChild(table.getElementsByTagName("tr")[0]);
     var newRow = table.insertRow();
     var col1 = newRow.insertCell(0);
-    col1.innerHTML = thisPokemon.name;
+    col1.innerHTML = thisPokemon.index + ".";
     var col2 = newRow.insertCell(1);
-    col2.innerHTML = thisPokemon.index;
+    col2.innerHTML = capitalize(thisPokemon.name);
     var col3 = newRow.insertCell(2);
-    col3.innerHTML = thisPokemon.move.join(", ");
+    col3.innerHTML = thisPokemon.move.join("<hr>");
     var col4 = newRow.insertCell(3);
     col4.innerHTML = thisPokemon.types;
     var col5 = newRow.insertCell(4);
@@ -52,7 +52,7 @@ function fetchPokemon(name) {
         pokeTypes.forEach(function (types) {
             thisPokemon.type.push(types.type.name);
         });
-        thisPokemon.types = thisPokemon.type.join(", ");
+        thisPokemon.types = thisPokemon.type.join("<br>");
         thisPokemon.pokeSprites = data["sprites"];
         thisPokemon.pokeFront = thisPokemon.pokeSprites.front_default;
         thisPokemon.pokeShiny = thisPokemon.pokeSprites.front_shiny;
@@ -86,4 +86,7 @@ function makeShiny() {
 function makeDefault() {
     getId("noShiny").innerHTML = "<img id=\"noShiny\" src=\"" + thisPokemon.pokeFront + "\">";
     getId("shiny").innerHTML = "<button id=\"shiny\" onclick=\"makeShiny()\">Shiny</button>";
+}
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
