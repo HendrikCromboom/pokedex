@@ -13,6 +13,7 @@ let thisPokemon:{
     index: string,
     type: string[],
     types: string,
+    pokeSprites: any,
     pokeFront: string,
     pokeShiny: string,
     moves: any[],
@@ -22,6 +23,7 @@ let thisPokemon:{
     index: "",
     type: [],
     types: "",
+    pokeSprites: "",
     pokeFront: "",
     pokeShiny: "",
     moves: [],
@@ -29,6 +31,7 @@ let thisPokemon:{
 }
 
 function formSubmit(){
+    resetThisPokemon()
     pullFormData()
     fetchPokemon(thisForm.pokeNameOrId)
     resetValue("pokeNameOrId")
@@ -39,6 +42,7 @@ function pullFormData(){
 }
 function pushFormToTable(){
     let table = getId("outputTable").getElementsByTagName("tbody")[0];
+    table.removeChild(table.getElementsByTagName("tr")[0])
     let newRow = (<HTMLTableSectionElement>table).insertRow()
     let col1 = newRow.insertCell(0);
     col1.innerHTML = thisPokemon.name;
@@ -49,10 +53,9 @@ function pushFormToTable(){
     let col4 = newRow.insertCell(3);
     col4.innerHTML = thisPokemon.types
     let col5 = newRow.insertCell(4);
-    col5.innerHTML = "<img id=\"noShiny\" src=\""+ thisPokemon.pokeFront +"\">";
+    col5.innerHTML = "<div id=\"noShiny\"><img  src=\""+ thisPokemon.pokeFront +"\"></div>";
     let col6 = newRow.insertCell(5);
-    col6.innerHTML = "<button id=\"shiny\">Shiny</button>";
-    resetThisPokemon();
+    col6.innerHTML = "<div id=\"shiny\"><button  onclick=\"makeShiny()\">Shiny</button></div>";
 }
 function fetchPokemon(name) {
     fetch("https://pokeapi.co/api/v2/pokemon/" + name + "/")
@@ -64,8 +67,9 @@ function fetchPokemon(name) {
             pokeTypes.forEach((types) => {
                 thisPokemon.type.push(types.type.name)})
             thisPokemon.types = thisPokemon.type.join(", ")
-            let pokeSprites = data["sprites"];
-            thisPokemon.pokeFront = pokeSprites.front_default
+            thisPokemon.pokeSprites = data["sprites"];
+            thisPokemon.pokeFront = thisPokemon.pokeSprites.front_default
+            thisPokemon.pokeShiny = thisPokemon.pokeSprites.front_shiny
             thisPokemon.moves = data["moves"]
             let moveLength = thisPokemon.moves.length
             for (let i = 0; i < 4 && i < thisPokemon.moves.length; i++) {
@@ -73,7 +77,6 @@ function fetchPokemon(name) {
                 thisPokemon.move.push(thisPokemon.moves[randomMoveNum].move.name);
                 thisPokemon.moves.splice(randomMoveNum, 1);
             }
-            thisPokemon.pokeShiny = data ["front_shiny"]
             pushFormToTable()
             })
         }
@@ -84,12 +87,19 @@ function resetThisPokemon(){
         index: "",
         type: [],
         types: "",
+        pokeSprites: [],
         pokeFront: "",
         pokeShiny: "",
         moves: [],
         move: []
     }
 }
-getId("shiny").addEventListener("click",function(){
-    getId("noShiny").innerHTML = thisPokemon.pokeShiny
-} )
+
+    function makeShiny(){
+    getId("noShiny").innerHTML = "<img id=\"noShiny\" src=\""+ thisPokemon.pokeShiny +"\">"
+        getId("shiny").innerHTML = "<button id=\"shiny\" onclick=\"makeDefault()\">Default</button>";
+}
+function makeDefault(){
+    getId("noShiny").innerHTML = "<img id=\"noShiny\" src=\""+ thisPokemon.pokeFront +"\">"
+    getId("shiny").innerHTML = "<button id=\"shiny\" onclick=\"makeShiny()\">Shiny</button>";
+}

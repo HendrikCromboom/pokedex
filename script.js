@@ -10,12 +10,14 @@ var thisPokemon = {
     index: "",
     type: [],
     types: "",
+    pokeSprites: "",
     pokeFront: "",
     pokeShiny: "",
     moves: [],
     move: []
 };
 function formSubmit() {
+    resetThisPokemon();
     pullFormData();
     fetchPokemon(thisForm.pokeNameOrId);
     resetValue("pokeNameOrId");
@@ -25,6 +27,7 @@ function pullFormData() {
 }
 function pushFormToTable() {
     var table = getId("outputTable").getElementsByTagName("tbody")[0];
+    table.removeChild(table.getElementsByTagName("tr")[0]);
     var newRow = table.insertRow();
     var col1 = newRow.insertCell(0);
     col1.innerHTML = thisPokemon.name;
@@ -35,10 +38,9 @@ function pushFormToTable() {
     var col4 = newRow.insertCell(3);
     col4.innerHTML = thisPokemon.types;
     var col5 = newRow.insertCell(4);
-    col5.innerHTML = "<img id=\"noShiny\" src=\"" + thisPokemon.pokeFront + "\">";
+    col5.innerHTML = "<div id=\"noShiny\"><img  src=\"" + thisPokemon.pokeFront + "\"></div>";
     var col6 = newRow.insertCell(5);
-    col6.innerHTML = "<button id=\"shiny\">Shiny</button>";
-    resetThisPokemon();
+    col6.innerHTML = "<div id=\"shiny\"><button  onclick=\"makeShiny()\">Shiny</button></div>";
 }
 function fetchPokemon(name) {
     fetch("https://pokeapi.co/api/v2/pokemon/" + name + "/")
@@ -51,8 +53,9 @@ function fetchPokemon(name) {
             thisPokemon.type.push(types.type.name);
         });
         thisPokemon.types = thisPokemon.type.join(", ");
-        var pokeSprites = data["sprites"];
-        thisPokemon.pokeFront = pokeSprites.front_default;
+        thisPokemon.pokeSprites = data["sprites"];
+        thisPokemon.pokeFront = thisPokemon.pokeSprites.front_default;
+        thisPokemon.pokeShiny = thisPokemon.pokeSprites.front_shiny;
         thisPokemon.moves = data["moves"];
         var moveLength = thisPokemon.moves.length;
         for (var i = 0; i < 4 && i < thisPokemon.moves.length; i++) {
@@ -60,7 +63,6 @@ function fetchPokemon(name) {
             thisPokemon.move.push(thisPokemon.moves[randomMoveNum].move.name);
             thisPokemon.moves.splice(randomMoveNum, 1);
         }
-        thisPokemon.pokeShiny = data["front_shiny"];
         pushFormToTable();
     });
 }
@@ -70,12 +72,18 @@ function resetThisPokemon() {
         index: "",
         type: [],
         types: "",
+        pokeSprites: [],
         pokeFront: "",
         pokeShiny: "",
         moves: [],
         move: []
     };
 }
-getId("shiny").addEventListener("click", function () {
-    getId("noShiny").innerHTML = thisPokemon.pokeShiny;
-});
+function makeShiny() {
+    getId("noShiny").innerHTML = "<img id=\"noShiny\" src=\"" + thisPokemon.pokeShiny + "\">";
+    getId("shiny").innerHTML = "<button id=\"shiny\" onclick=\"makeDefault()\">Default</button>";
+}
+function makeDefault() {
+    getId("noShiny").innerHTML = "<img id=\"noShiny\" src=\"" + thisPokemon.pokeFront + "\">";
+    getId("shiny").innerHTML = "<button id=\"shiny\" onclick=\"makeShiny()\">Shiny</button>";
+}
