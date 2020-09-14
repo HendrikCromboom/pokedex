@@ -5,6 +5,42 @@
     <title>Pokedex</title>
 </head>
 <body>
+<table>
+    <tr>
+        <td>
+            <form autocomplete="off" id="inputForm" onsubmit="event.preventDefault(); formSubmit()">
+                <div>
+                    <label>Name or ID
+                        <input type="text" name="pokeNameOrId" alt="Insert Name or ID of Pokemon" id="pokeNameOrId">
+                    </label>
+                </div>
+
+                    <label>
+                        <input type="submit" value="Submit">
+                    </label>
+                </div>
+
+            </form>
+        </td>
+        <td>
+            <table id="outputTable">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Moves</th>
+                    <th>Type</th>
+                    <th>Front</th>
+                    <th>Evolution</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
 
 <script src="script.js"></script>
 </body>
