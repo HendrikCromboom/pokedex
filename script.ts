@@ -11,17 +11,21 @@ let thisForm:{
 let thisPokemon:{
     name: string,
     index: string,
-    type: any,
-    type1: string,
-    type2: string,
-    pokeFront: string
+    type: string[],
+    types: string,
+    pokeFront: string,
+    pokeShiny: string,
+    moves: any[],
+    move: string[]
 } = {
     name: "",
     index: "",
-    type: "",
-    type1: "",
-    type2: "",
-    pokeFront: ""
+    type: [],
+    types: "",
+    pokeFront: "",
+    pokeShiny: "",
+    moves: [],
+    move: []
 }
 
 function formSubmit(){
@@ -41,33 +45,51 @@ function pushFormToTable(){
     let col2 = newRow.insertCell(1);
     col2.innerHTML = thisPokemon.index;
     let col3 = newRow.insertCell(2);
-    col3.innerHTML = "moves";
+    col3.innerHTML = thisPokemon.move.join(", ");
     let col4 = newRow.insertCell(3);
-    if (thisPokemon.type2 != ""){
-    col4.innerHTML = thisPokemon.type1+ ", "+ thisPokemon.type2;}
-    else {col4.innerHTML = thisPokemon.type1}
+    col4.innerHTML = thisPokemon.types
     let col5 = newRow.insertCell(4);
-    col5.innerHTML = "<img src=\""+ thisPokemon.pokeFront +"\">";
+    col5.innerHTML = "<img id=\"noShiny\" src=\""+ thisPokemon.pokeFront +"\">";
+    let col6 = newRow.insertCell(5);
+    col6.innerHTML = "<button id=\"shiny\">Shiny</button>";
+    resetThisPokemon();
 }
 function fetchPokemon(name) {
-fetch("https://pokeapi.co/api/v2/pokemon/"+ name + "/")
-    .then(response => response.json())
-    .then(data => {
-        thisPokemon.name = data["name"]
-        thisPokemon.index = data ["game_indices"]
-        let pokeTypes = data["types"]
-        //thisPokemon.type1 = pokeTypes[0].type.name
-        pokeTypes.forEach((thisPokemonType, i) =>{
-            if(i===0){
-            thisPokemon.type1 = pokeTypes[i].type.name}
-            else{ thisPokemon.type2 = pokeTypes[i].type.name}
+    fetch("https://pokeapi.co/api/v2/pokemon/" + name + "/")
+        .then(response => response.json())
+        .then(data => {
+            thisPokemon.name = data["name"]
+            thisPokemon.index = data ["id"]
+            let pokeTypes = data["types"]
+            pokeTypes.forEach((types) => {
+                thisPokemon.type.push(types.type.name)})
+            thisPokemon.types = thisPokemon.type.join(", ")
+            let pokeSprites = data["sprites"];
+            thisPokemon.pokeFront = pokeSprites.front_default
+            thisPokemon.moves = data["moves"]
+            let moveLength = thisPokemon.moves.length
+            for (let i = 0; i < 4 && i < thisPokemon.moves.length; i++) {
+                let randomMoveNum = Math.floor(Math.random()*moveLength)
+                thisPokemon.move.push(thisPokemon.moves[randomMoveNum].move.name);
+                thisPokemon.moves.splice(randomMoveNum, 1);
+            }
+            thisPokemon.pokeShiny = data ["front_shiny"]
+            pushFormToTable()
             })
-        let pokeSprites = data["sprites"];
-        thisPokemon.pokeFront = pokeSprites.front_default
-        console.log(thisPokemon.index);
-        pushFormToTable()
-    })
+        }
+
+function resetThisPokemon(){
+    thisPokemon ={
+        name: "",
+        index: "",
+        type: [],
+        types: "",
+        pokeFront: "",
+        pokeShiny: "",
+        moves: [],
+        move: []
+    }
 }
-
-
-
+getId("shiny").addEventListener("click",function(){
+    getId("noShiny").innerHTML = thisPokemon.pokeShiny
+} )
