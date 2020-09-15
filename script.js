@@ -17,7 +17,9 @@ var thisPokemon = {
     move: [],
     evo: "",
     evopokeSprites: "",
-    evopokeFront: ""
+    evopokeFront: "",
+    species: "",
+    chain: ""
 };
 function formSubmit() {
     resetThisPokemon();
@@ -50,6 +52,7 @@ function fetchPokemon(name) {
         thisPokemon.pokeSprites = data["sprites"];
         thisPokemon.pokeFront = thisPokemon.pokeSprites.front_default;
         thisPokemon.pokeShiny = thisPokemon.pokeSprites.front_shiny;
+        thisPokemon.species = data["species"].url;
         thisPokemon.moves = data["moves"];
         var moveLength = thisPokemon.moves.length;
         for (var i = 0; i < 4 && i < thisPokemon.moves.length; i++) {
@@ -57,19 +60,25 @@ function fetchPokemon(name) {
             thisPokemon.move.push(thisPokemon.moves[randomMoveNum].move.name);
             thisPokemon.moves.splice(randomMoveNum, 1);
         }
-        fetch("https://pokeapi.co/api/v2/evolution-chain/" + thisForm.pokeNameOrId + "/")
+        fetch(thisPokemon.species)
             .then(function (response) { return response.json(); })
             .then(function (data) {
-            thisPokemon.evo = data["chain"]["evolves_to"][0]["species"].name;
-            fetch("https://pokeapi.co/api/v2/pokemon/" + thisPokemon.evo + "/")
+            thisPokemon.chain = data["evolution_chain"].url;
+            fetch(thisPokemon.chain)
                 .then(function (response) { return response.json(); })
                 .then(function (data) {
-                thisPokemon.evopokeSprites = data["sprites"];
-                console.log(thisPokemon.evopokeSprites);
-                thisPokemon.evopokeFront = thisPokemon.evopokeSprites.front_default;
-                pushFormToTable();
+                thisPokemon.evo = data["chain"]["evolves_to"][0]["species"].name;
+                fetch("https://pokeapi.co/api/v2/pokemon/" + thisPokemon.evo + "/")
+                    .then(function (response) { return response.json(); })
+                    .then(function (data) {
+                    thisPokemon.evopokeSprites = data["sprites"];
+                    thisPokemon.evopokeFront = thisPokemon.evopokeSprites.front_default;
+                    pushFormToTable();
+                });
             });
         });
+    })["catch"](function (error) {
+        alert("You did not enter a valid name OR something is wrong with server...<br> Try again!");
     });
 }
 function resetThisPokemon() {
@@ -85,7 +94,9 @@ function resetThisPokemon() {
         move: [],
         evo: "",
         evopokeSprites: "",
-        evopokeFront: ""
+        evopokeFront: "",
+        species: "",
+        chain: ""
     };
 }
 function makeShiny() {
