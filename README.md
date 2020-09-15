@@ -4,6 +4,12 @@
 
 ---
 
+### Demo
+
+https://hendrikcromboom.github.io/pokedex/
+
+---
+
 ### Goal
 
 AJAX, API, JSON, ...
