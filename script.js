@@ -17,6 +17,7 @@ var thisPokemon = {
     move: []
 };
 function formSubmit() {
+    window.open("index.html", '_blank', "width=900, height=600");
     resetThisPokemon();
     pullFormData();
     fetchPokemon(thisForm.pokeNameOrId);
