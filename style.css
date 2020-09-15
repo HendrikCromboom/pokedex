@@ -68,3 +68,10 @@ body{
 
     border-radius: 5px;
 }
+#shinyz{
+    background-color: darkred;
+    border-radius: 5px;
+    position: fixed;
+    top: 83%;
+    left: 33%;
+}

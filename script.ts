@@ -46,7 +46,7 @@ function pushFormToTable(){
     getId("moves").innerHTML = thisPokemon.move.join("<hr>");
     getId("name").innerHTML = capitalize(thisPokemon.name);
     getId("id").innerHTML = thisPokemon.index+ ".";
-    getId("shiner").innerHTML = "<div id=\"shiny\"><button  onclick=\"makeShiny()\">Shiny</button></div>";
+    getId("shiner").innerHTML = "<div id=\"shiny\"><button id=\"shinyz\" onclick=\"makeShiny()\">Shiny</button></div>";
 }
 function fetchPokemon(name) {
     fetch("https://pokeapi.co/api/v2/pokemon/" + name + "/")
@@ -88,11 +88,11 @@ function resetThisPokemon(){
 
     function makeShiny(){
     getId("noShiny").innerHTML = "<img id=\"noShiny\" src=\""+ thisPokemon.pokeShiny +"\">"
-        getId("shiny").innerHTML = "<button id=\"shiny\" onclick=\"makeDefault()\">Default</button>";
+        getId("shiny").innerHTML = "<button id=\"shinyz\" onclick=\"makeDefault()\">Default</button>";
 }
 function makeDefault(){
     getId("noShiny").innerHTML = "<img id=\"noShiny\" src=\""+ thisPokemon.pokeFront +"\">"
-    getId("shiny").innerHTML = "<button id=\"shiny\" onclick=\"makeShiny()\">Shiny</button>";
+    getId("shiny").innerHTML = "<button id=\"shinyz\" onclick=\"makeShiny()\">Shiny</button>";
 }
 
 function capitalize(string)
