@@ -14,10 +14,12 @@ var thisPokemon = {
     pokeFront: "",
     pokeShiny: "",
     moves: [],
-    move: []
+    move: [],
+    evo: "",
+    evopokeSprites: "",
+    evopokeFront: ""
 };
 function formSubmit() {
-    window.open("index.html", '_blank', "width=900, height=600");
     resetThisPokemon();
     pullFormData();
     fetchPokemon(thisForm.pokeNameOrId);
@@ -55,7 +57,19 @@ function fetchPokemon(name) {
             thisPokemon.move.push(thisPokemon.moves[randomMoveNum].move.name);
             thisPokemon.moves.splice(randomMoveNum, 1);
         }
-        pushFormToTable();
+        fetch("https://pokeapi.co/api/v2/evolution-chain/" + thisForm.pokeNameOrId + "/")
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+            thisPokemon.evo = data["chain"]["evolves_to"][0]["species"].name;
+            fetch("https://pokeapi.co/api/v2/pokemon/" + thisPokemon.evo + "/")
+                .then(function (response) { return response.json(); })
+                .then(function (data) {
+                thisPokemon.evopokeSprites = data["sprites"];
+                console.log(thisPokemon.evopokeSprites);
+                thisPokemon.evopokeFront = thisPokemon.evopokeSprites.front_default;
+                pushFormToTable();
+            });
+        });
     });
 }
 function resetThisPokemon() {
@@ -68,7 +82,10 @@ function resetThisPokemon() {
         pokeFront: "",
         pokeShiny: "",
         moves: [],
-        move: []
+        move: [],
+        evo: "",
+        evopokeSprites: "",
+        evopokeFront: ""
     };
 }
 function makeShiny() {
@@ -81,4 +98,10 @@ function makeDefault() {
 }
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+getId("resize").addEventListener("click", function () {
+    window.open("index.html", '_blank', "width=900, height=600");
+});
+function addEvoToDex() {
+    getId("dex").innerHTML = "<p>" + thisPokemon.evo + "<p><hr><img src=\"" + thisPokemon.evopokeFront + "\">";
 }
