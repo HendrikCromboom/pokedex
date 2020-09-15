@@ -2,60 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pokedex</title>
-    <link rel="stylesheet" href="style.css">
+    <title>A wild Rotom apears</title>
 </head>
 <body>
-<div class="grid-container">
-    <table class="tablo">
-        <tr>
-            <td>
-                <form autocomplete="off" id="inputForm" onsubmit="event.preventDefault(); formSubmit()">
-                    <div>
-                        <label>Name or ID
-                            <br>
-                            <input type="text" name="pokeNameOrId" alt="Insert Name or ID of Pokemon" id="pokeNameOrId">
-                        </label>
-                    </div>
-
-                        <label>
-                            <br>
-                            <input type="submit" value="Submit">
-                        </label>
-                </form>
-            </td>
-    </table>
-    <div id="dex">Test</div>
-    <div class="container" id="idC">
-        <div class="head" id="idHead">ID</div>
-        <div class="unit" id="id">[]</div>
-    </div>
-    <div class="container" id="nameC">
-        <div class="head" id="nameHead">Name<hr></div>
-        <div class="unit" id="name">______</div>
-    </div>
-    <div class="container" id="spriteC">
-        <div class="unit" id="sprite"></div>
-    </div>
-    <div class="container" id="typesC">
-        <div class="head" id="typesHead">Type:<hr></div>
-        <div class="unit" id="types"></div>
-    </div>
-    <div class="container" id="movesC">
-        <div class="head" id="movesHead">Moves:<hr></div>
-        <div class="unit" id="moves"></div>
-    </div>
-    <div class="container" id="shinyC">
-        <div class="unit" id="shiner">_____</div>
-    </div>
-    <div class="container" id="resizeC">
-        <button id="resize">Resize</button>
-    </div>
-    <div class="container" id="evoC">
-        <button id="evo" onclick="addEvoToDex()">Evolution</button>
-    </div>
-</div>
-
-<script src="script.js"></script>
+<p>A wild Rotom Apears, please click it... Its not safe to go into the grass without it...</p>
+<img id="rotom" src="Rotom.png">
+<script src="rotom.js"></script>
 </body>
 </html>
