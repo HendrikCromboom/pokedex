@@ -99,9 +99,6 @@ function makeDefault() {
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
-getId("resize").addEventListener("click", function () {
-    window.open("index.html", '_blank', "width=900, height=600");
-});
 function addEvoToDex() {
     getId("dex").innerHTML = "<p>" + thisPokemon.evo + "<p><hr><img src=\"" + thisPokemon.evopokeFront + "\">";
 }
