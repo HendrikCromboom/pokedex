@@ -41,21 +41,12 @@ function pullFormData(){
     formData("pokeNameOrId");
 }
 function pushFormToTable(){
-    let table = getId("outputTable").getElementsByTagName("tbody")[0];
-    table.removeChild(table.getElementsByTagName("tr")[0])
-    let newRow = (<HTMLTableSectionElement>table).insertRow()
-    let col1 = newRow.insertCell(0);
-    col1.innerHTML = thisPokemon.index+ ".";
-    let col2 = newRow.insertCell(1);
-    col2.innerHTML = capitalize(thisPokemon.name);
-    let col3 = newRow.insertCell(2);
-    col3.innerHTML = thisPokemon.move.join("<hr>");
-    let col4 = newRow.insertCell(3);
-    col4.innerHTML = thisPokemon.types
-    let col5 = newRow.insertCell(4);
-    col5.innerHTML = "<div id=\"noShiny\"><img  src=\""+ thisPokemon.pokeFront +"\"></div>";
-    let col6 = newRow.insertCell(5);
-    col6.innerHTML = "<div id=\"shiny\"><button  onclick=\"makeShiny()\">Shiny</button></div>";
+    getId("sprite").innerHTML = "<div id=\"noShiny\"><img  src=\""+ thisPokemon.pokeFront +"\"></div>";
+    getId("types").innerHTML = thisPokemon.types;
+    getId("moves").innerHTML = thisPokemon.move.join("<hr>");
+    getId("name").innerHTML = capitalize(thisPokemon.name);
+    getId("id").innerHTML = thisPokemon.index+ ".";
+    getId("shiner").innerHTML = "<div id=\"shiny\"><button  onclick=\"makeShiny()\">Shiny</button></div>";
 }
 function fetchPokemon(name) {
     fetch("https://pokeapi.co/api/v2/pokemon/" + name + "/")
@@ -66,7 +57,7 @@ function fetchPokemon(name) {
             let pokeTypes = data["types"]
             pokeTypes.forEach((types) => {
                 thisPokemon.type.push(types.type.name)})
-            thisPokemon.types = thisPokemon.type.join("<br>")
+            thisPokemon.types = thisPokemon.type.join("<hr>")
             thisPokemon.pokeSprites = data["sprites"];
             thisPokemon.pokeFront = thisPokemon.pokeSprites.front_default
             thisPokemon.pokeShiny = thisPokemon.pokeSprites.front_shiny

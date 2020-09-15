@@ -3,13 +3,68 @@
     src: url(Pokemon.ttf);
 }
 body{
-    background:url(bg.png) no-repeat center center fixed;
-    background-size: cover;
     overflow: hidden;
+    height: 100%;
+    width: 100%;
     font-family: PokemonClassic, Arial Black;
+    font-size: 1em;
+    background:url(bg.png)  no-repeat center center fixed;
+    background-size: cover;
 
 }
-.tablo{
-    margin-top: 39%;
-    margin-left: 10%;
+.grid-contaainer {
+    height: 100%;
+    width: 100%;
+
+
+    grid-template-areas:
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . ."
+    ". . . . . . . . . . . . . .";
+}
+#idC{
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 38%;
+    left: 33%;
+}
+#nameC{
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 70.5%;
+    left: 34%;
+}
+#typesC{
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 63.5%;
+    left: 47%;
+}
+#spriteC{
+    position: fixed;
+    top: 19%;
+    left: 46.5%;
+}
+#movesC{
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 50%;
+    left: 54%;
+}
+.container{
+    height: auto;
+    width: auto;
+
+    border-radius: 5px;
 }
